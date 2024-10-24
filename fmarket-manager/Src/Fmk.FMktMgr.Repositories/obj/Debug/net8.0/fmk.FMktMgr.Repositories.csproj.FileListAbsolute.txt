@@ -1,0 +1,15 @@
+C:\Workspaces\Git\testing\fmarket-manager\Src\fmk.FMktMgr.Repositories\bin\Debug\net8.0\fmk.FMktMgr.Repositories.deps.json
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\bin\Debug\net8.0\fmk.FMktMgr.Repositories.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\bin\Debug\net8.0\fmk.FMktMgr.Repositories.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\obj\Debug\net8.0\fmk.FMktMgr.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\obj\Debug\net8.0\fmk.FMktMgr.Repositories.AssemblyInfoInputs.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\obj\Debug\net8.0\fmk.FMktMgr.Repositories.AssemblyInfo.cs
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\obj\Debug\net8.0\fmk.FMktMgr.Repositories.csproj.CoreCompileInputs.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\obj\Debug\net8.0\fmk.FMktMgr.Repositories.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\obj\Debug\net8.0\refint\fmk.FMktMgr.Repositories.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Repositories\obj\Debug\net8.0\fmk.FMktMgr.Repositories.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\fmk.FMktMgr.Repositories\obj\Debug\net8.0\ref\fmk.FMktMgr.Repositories.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Fmk.FMktMgr.Repositories\bin\Debug\net8.0\Fmk.FMktMgr.Core.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Fmk.FMktMgr.Repositories\bin\Debug\net8.0\Fmk.FMktMgr.Core.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\Fmk.FMktMgr.Repositories\obj\Debug\net8.0\Fmk.FMktMgr.Repositories.csproj.AssemblyReference.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\Fmk.FMktMgr.Repositories\obj\Debug\net8.0\Fmk.FMkt.7FFC9933.Up2Date

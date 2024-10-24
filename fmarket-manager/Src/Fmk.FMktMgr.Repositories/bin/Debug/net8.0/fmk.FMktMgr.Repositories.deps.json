@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Fmk.FMktMgr.Repositories/1.0.0": {
+        "dependencies": {
+          "Fmk.FMktMgr.Core": "1.0.0"
+        },
+        "runtime": {
+          "Fmk.FMktMgr.Repositories.dll": {}
+        }
+      },
+      "Fmk.FMktMgr.Core/1.0.0": {
+        "runtime": {
+          "Fmk.FMktMgr.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Fmk.FMktMgr.Repositories/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fmk.FMktMgr.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

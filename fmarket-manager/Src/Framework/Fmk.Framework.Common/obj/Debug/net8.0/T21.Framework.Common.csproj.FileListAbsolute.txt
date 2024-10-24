@@ -1,0 +1,12 @@
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\bin\Debug\net8.0\T21.Framework.Common.deps.json
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\bin\Debug\net8.0\T21.Framework.Common.dll
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\bin\Debug\net8.0\T21.Framework.Common.pdb
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\T21.Framework.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\T21.Framework.Common.AssemblyInfoInputs.cache
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\T21.Framework.Common.AssemblyInfo.cs
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\T21.Framework.Common.csproj.CoreCompileInputs.cache
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\T21.Framework.Common.sourcelink.json
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\T21.Framework.Common.dll
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\refint\T21.Framework.Common.dll
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\T21.Framework.Common.pdb
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Common\obj\Debug\net8.0\ref\T21.Framework.Common.dll

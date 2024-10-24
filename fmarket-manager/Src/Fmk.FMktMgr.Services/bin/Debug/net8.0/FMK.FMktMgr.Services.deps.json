@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Fmk.FMktMgr.Services/1.0.0": {
+        "runtime": {
+          "Fmk.FMktMgr.Services.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Fmk.FMktMgr.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

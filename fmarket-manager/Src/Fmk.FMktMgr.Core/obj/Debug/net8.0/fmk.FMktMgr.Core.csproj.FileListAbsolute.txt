@@ -1,0 +1,11 @@
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\bin\Debug\net8.0\FMK.FMktMgr.Core.deps.json
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\bin\Debug\net8.0\FMK.FMktMgr.Core.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\bin\Debug\net8.0\FMK.FMktMgr.Core.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\obj\Debug\net8.0\FMK.FMktMgr.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\obj\Debug\net8.0\FMK.FMktMgr.Core.AssemblyInfoInputs.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\obj\Debug\net8.0\FMK.FMktMgr.Core.AssemblyInfo.cs
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\obj\Debug\net8.0\FMK.FMktMgr.Core.csproj.CoreCompileInputs.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\obj\Debug\net8.0\FMK.FMktMgr.Core.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\obj\Debug\net8.0\refint\FMK.FMktMgr.Core.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\obj\Debug\net8.0\FMK.FMktMgr.Core.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Core\obj\Debug\net8.0\ref\FMK.FMktMgr.Core.dll

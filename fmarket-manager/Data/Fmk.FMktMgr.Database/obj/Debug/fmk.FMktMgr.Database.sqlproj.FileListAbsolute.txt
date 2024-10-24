@@ -1,0 +1,10 @@
+C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.FMktMgr.Database\bin\Debug\FMK.FMktMgr.Database.dacpac
+C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.FMktMgr.Database\bin\Debug\fmk.FMktMgr.Database.dll
+C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.FMktMgr.Database\bin\Debug\fmk.FMktMgr.Database.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.FMktMgr.Database\obj\Debug\FMK.FMktMgr.Database.sqlproj.AssemblyReference.cache
+C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.FMktMgr.Database\obj\Debug\fmk.FMktMgr.Database.dll
+C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.FMktMgr.Database\obj\Debug\fmk.FMktMgr.Database.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\Model.xml
+C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\refactor.xml
+C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\postdeploy.sql
+C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\predeploy.sql

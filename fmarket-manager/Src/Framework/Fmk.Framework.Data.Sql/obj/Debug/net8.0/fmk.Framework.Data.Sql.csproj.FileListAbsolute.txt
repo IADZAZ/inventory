@@ -1,0 +1,15 @@
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\bin\Debug\net8.0\FMK.Framework.Data.Sql.deps.json
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\bin\Debug\net8.0\FMK.Framework.Data.Sql.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\bin\Debug\net8.0\FMK.Framework.Data.Sql.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\bin\Debug\net8.0\FMK.Framework.Common.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\bin\Debug\net8.0\FMK.Framework.Common.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\FMK.Framework.Data.Sql.csproj.AssemblyReference.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\FMK.Framework.Data.Sql.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\FMK.Framework.Data.Sql.AssemblyInfoInputs.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\FMK.Framework.Data.Sql.AssemblyInfo.cs
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\FMK.Framework.Data.Sql.csproj.CoreCompileInputs.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\FMK.Framework.Data.Sql.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\refint\FMK.Framework.Data.Sql.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\FMK.Framework.Data.Sql.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Data.Sql\obj\Debug\net8.0\ref\FMK.Framework.Data.Sql.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\Fmk.Framework.Data.Sql\obj\Debug\net8.0\Fmk.Fram.4280E5C1.Up2Date

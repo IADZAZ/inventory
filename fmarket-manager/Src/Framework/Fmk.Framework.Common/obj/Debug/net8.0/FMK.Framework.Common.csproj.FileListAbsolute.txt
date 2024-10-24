@@ -1,0 +1,11 @@
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\bin\Debug\net8.0\FMK.Framework.Common.deps.json
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\bin\Debug\net8.0\FMK.Framework.Common.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\bin\Debug\net8.0\FMK.Framework.Common.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\FMK.Framework.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\FMK.Framework.Common.AssemblyInfoInputs.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\FMK.Framework.Common.AssemblyInfo.cs
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\FMK.Framework.Common.csproj.CoreCompileInputs.cache
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\FMK.Framework.Common.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\refint\FMK.Framework.Common.dll
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\FMK.Framework.Common.pdb
+C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\ref\FMK.Framework.Common.dll

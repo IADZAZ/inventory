@@ -1,0 +1,10 @@
+10/22/2024 4:19:46 PM	This log contains information about the import schema operation into project 'FMK.FMktMgr.Database' on computer 'fmk-DELL-56' by user 'markuss'.
+10/22/2024 4:19:46 PM	Deserializing model
+10/22/2024 4:19:46 PM	Resolving model
+10/22/2024 4:19:46 PM	Visiting imported model for types
+10/22/2024 4:19:46 PM	Scanning project for duplicate elements
+10/22/2024 4:19:46 PM	Finished duplicate element processing
+10/22/2024 4:19:47 PM	Processing extra files
+10/22/2024 4:19:47 PM	Finished importing Data-tier Application file.
+10/22/2024 4:19:47 PM	A summary of the import was saved to the following location: C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.FMktMgr.Database\Import Schema Logs\FMK.FMktMgr.Database_20241022111946.log
+10/22/2024 4:19:47 PM	Click Finish to continue...

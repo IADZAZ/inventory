@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[EventDefinition] (
+    [Id]                  INT                IDENTITY (1, 1) NOT NULL,
+    [Code]                NVARCHAR (10)      NOT NULL,
+    [Name]                NVARCHAR (50)      NOT NULL,
+    [Description]         NVARCHAR (255)     NULL,
+    [EventTypeId]         SMALLINT           NOT NULL,
+    [ManagementCompanyId] INT                NOT NULL,
+    [LocationId]          INT                NOT NULL,
+    [ScheduledStartTime]  DATETIMEOFFSET (7) NOT NULL,
+    [ScheduledEndTime]    DATETIMEOFFSET (7) NOT NULL,
+    [EventRentTypeId]     SMALLINT           NOT NULL,
+    [DefaultBoothSpace]   NVARCHAR (255)     NULL,
+    [DefaultPettyCash]    DECIMAL (18, 2)    NULL,
+    [FlexData]            NVARCHAR (MAX)     NULL,
+    [DateCreated]         DATETIMEOFFSET (7) CONSTRAINT [DF_dboEventDefinition_DateCreated] DEFAULT (sysdatetimeoffset()) NOT NULL,
+    [LastUpdateBy]        NVARCHAR (255)     CONSTRAINT [DF_dboEventDefinition_LastUpdateBy] DEFAULT ('{system}') NOT NULL,
+    [DateDeactivated]     DATETIMEOFFSET (7) NULL,
+    CONSTRAINT [PK_dboEventDefinition] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [U_dboEventDefinition_Code] UNIQUE NONCLUSTERED ([Code] ASC),
+    CONSTRAINT [U_dboEventDefinition_Name] UNIQUE NONCLUSTERED ([Name] ASC),
+    CONSTRAINT [FK_REF_dboEventDefinition_EventRentTypeId_dbolkEventRentType_Id] FOREIGN KEY ([EventRentTypeId]) REFERENCES [dbo].[lkEventRentType] ([Id]),
+    CONSTRAINT [FK_REF_dboEventDefinition_EventTypeId_dbolkEventType_Id] FOREIGN KEY ([EventTypeId]) REFERENCES [dbo].[lkEventType] ([Id]),
+    CONSTRAINT [FK_REF_dboEventDefinition_ManagementCompanyId_dboCompany_Id] FOREIGN KEY ([ManagementCompanyId]) REFERENCES [dbo].[Company] ([Id])
+);
+

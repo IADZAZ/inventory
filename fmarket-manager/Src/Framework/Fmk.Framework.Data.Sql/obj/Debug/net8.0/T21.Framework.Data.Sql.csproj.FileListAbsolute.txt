@@ -1,0 +1,16 @@
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\bin\Debug\net8.0\T21.Framework.Data.Sql.deps.json
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\bin\Debug\net8.0\T21.Framework.Data.Sql.dll
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\bin\Debug\net8.0\T21.Framework.Data.Sql.pdb
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\bin\Debug\net8.0\T21.Framework.Common.dll
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\bin\Debug\net8.0\T21.Framework.Common.pdb
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Framework.Data.Sql.csproj.AssemblyReference.cache
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Framework.Data.Sql.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Framework.Data.Sql.AssemblyInfoInputs.cache
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Framework.Data.Sql.AssemblyInfo.cs
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Framework.Data.Sql.csproj.CoreCompileInputs.cache
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Framework.Data.Sql.sourcelink.json
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Fram.37ED6132.Up2Date
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Framework.Data.Sql.dll
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\refint\T21.Framework.Data.Sql.dll
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\T21.Framework.Data.Sql.pdb
+C:\Workspaces\Git\t21-nexus-dev\Src\Framework\T21.Framework.Data.Sql\obj\Debug\net8.0\ref\T21.Framework.Data.Sql.dll
