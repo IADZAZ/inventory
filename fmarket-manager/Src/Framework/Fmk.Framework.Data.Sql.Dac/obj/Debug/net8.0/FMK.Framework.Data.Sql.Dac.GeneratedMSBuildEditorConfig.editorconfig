@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Fmk.Framework.Data.Sql.Dac
-build_property.ProjectDir = C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\Fmk.Framework.Data.Sql.Dac\
+build_property.ProjectDir = C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Data.Sql.Dac\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

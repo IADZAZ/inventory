@@ -7,7 +7,7 @@
     [LastNamePref]    NVARCHAR (50)      NULL,
     [GenderId]        SMALLINT           NOT NULL,
     [GenderPrefId]    SMALLINT           NULL,
-    [DateOfBirth]     DATE               NOT NULL,
+    [DateOfBirth]     DATE               NULL,
     [CountryOfBirth]  NVARCHAR (50)      NULL,
     [TaxIdNumber]     NVARCHAR (50)      NULL,
     [FlexData]        NVARCHAR (MAX)     NULL,

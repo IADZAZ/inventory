@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.1",
     "restore": {
-      "projectUniqueName": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Framework\\FMK.Framework.Common\\FMK.Framework.Common.csproj",
-      "projectName": "FMK.Framework.Common",
-      "projectPath": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Framework\\FMK.Framework.Common\\FMK.Framework.Common.csproj",
+      "projectUniqueName": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Framework\\Fmk.Framework.Common\\Fmk.Framework.Common.csproj",
+      "projectName": "Fmk.Framework.Common",
+      "projectPath": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Framework\\Fmk.Framework.Common\\Fmk.Framework.Common.csproj",
       "packagesPath": "C:\\Users\\markuss\\.nuget\\packages\\",
-      "outputPath": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Framework\\FMK.Framework.Common\\obj\\",
+      "outputPath": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Framework\\Fmk.Framework.Common\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -8,3 +8,13 @@ C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\Mo
 C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\refactor.xml
 C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\postdeploy.sql
 C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\predeploy.sql
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\bin\Debug\Fmk.FMktMgr.Database.dacpac
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\bin\Debug\fmk.FMktMgr.Database.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\bin\Debug\fmk.FMktMgr.Database.pdb
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\Fmk.FMktMgr.Database.sqlproj.AssemblyReference.cache
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\Model.xml
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\refactor.xml
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\postdeploy.sql
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\predeploy.sql
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\fmk.FMktMgr.Database.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\fmk.FMktMgr.Database.pdb

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\Fmk.FMktMgr.WebApi.csproj": {}
+    "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\Fmk.FMktMgr.WebApi.csproj": {}
   },
   "projects": {
-    "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\Fmk.FMktMgr.WebApi.csproj": {
+    "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\Fmk.FMktMgr.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\Fmk.FMktMgr.WebApi.csproj",
+        "projectUniqueName": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\Fmk.FMktMgr.WebApi.csproj",
         "projectName": "Fmk.FMktMgr.WebApi",
-        "projectPath": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\Fmk.FMktMgr.WebApi.csproj",
+        "projectPath": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\Fmk.FMktMgr.WebApi.csproj",
         "packagesPath": "C:\\Users\\markuss\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\obj\\",
+        "outputPath": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

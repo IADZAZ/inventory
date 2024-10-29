@@ -4,3 +4,9 @@ C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.Logging.Database\bin\Debug\fm
 C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.Logging.Database\obj\Debug\FMK.Logging.Database.sqlproj.AssemblyReference.cache
 C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.Logging.Database\obj\Debug\fmk.Logging.Database.dll
 C:\Workspaces\Git\testing\fmarket-manager\Data\FMK.Logging.Database\obj\Debug\fmk.Logging.Database.pdb
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.Logging.Database\bin\Debug\Fmk.Logging.Database.dacpac
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.Logging.Database\bin\Debug\fmk.Logging.Database.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.Logging.Database\bin\Debug\fmk.Logging.Database.pdb
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.Logging.Database\obj\Debug\Fmk.Logging.Database.sqlproj.AssemblyReference.cache
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.Logging.Database\obj\Debug\fmk.Logging.Database.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.Logging.Database\obj\Debug\fmk.Logging.Database.pdb

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4cSKFJjSJhnMog/o+R1Lfz/Fo9/JjAkc0tVnoqpXBJQCCyss1roYh2qxOnHyPleYZoIuYJtjX096T7bhhzvH7A==",
+  "dgSpecHash": "x4FqbBKECkD2OwKk8Y43JP4pZt15R7omNCv8mzhOrfTGkDz1hD5T9COSfDBfRBYtbQd8uJCqHtYJkHRd+qxecw==",
   "success": true,
-  "projectFilePath": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Framework\\Fmk.Framework.Common\\Fmk.Framework.Common.csproj",
+  "projectFilePath": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Framework\\Fmk.Framework.Common\\Fmk.Framework.Common.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

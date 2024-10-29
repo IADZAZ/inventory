@@ -9,3 +9,15 @@ C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Services\obj\Debug\net
 C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Services\obj\Debug\net8.0\refint\FMK.FMktMgr.Services.dll
 C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Services\obj\Debug\net8.0\FMK.FMktMgr.Services.pdb
 C:\Workspaces\Git\testing\fmarket-manager\Src\FMK.FMktMgr.Services\obj\Debug\net8.0\ref\FMK.FMktMgr.Services.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\bin\Debug\net8.0\Fmk.FMktMgr.Services.deps.json
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\bin\Debug\net8.0\Fmk.FMktMgr.Services.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\bin\Debug\net8.0\Fmk.FMktMgr.Services.pdb
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\Fmk.FMktMgr.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\Fmk.FMktMgr.Services.AssemblyInfoInputs.cache
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\Fmk.FMktMgr.Services.AssemblyInfo.cs
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\Fmk.FMktMgr.Services.csproj.CoreCompileInputs.cache
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\Fmk.FMktMgr.Services.sourcelink.json
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\Fmk.FMktMgr.Services.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\refint\Fmk.FMktMgr.Services.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\Fmk.FMktMgr.Services.pdb
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Fmk.FMktMgr.Services\obj\Debug\net8.0\ref\Fmk.FMktMgr.Services.dll

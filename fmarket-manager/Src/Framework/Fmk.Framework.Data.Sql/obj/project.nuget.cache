@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iSOsiuFnwbI2G29UZJtM86vMymOT2GLpXIe/HgxTcyoKHVbvBqJyB/jVM2hxN7tlCLDtzcSjsXEYSSaulgk6Nw==",
+  "dgSpecHash": "XbWPo0MGiWsa3HGxGUNVGJsmaU+6ICCYbb86DAqktLQ1umhexGctdmlitYj62+KmFySY2CqkET9F61hZWSk4gg==",
   "success": true,
-  "projectFilePath": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Framework\\Fmk.Framework.Data.Sql\\Fmk.Framework.Data.Sql.csproj",
+  "projectFilePath": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Framework\\Fmk.Framework.Data.Sql\\Fmk.Framework.Data.Sql.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\markuss\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\markuss\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

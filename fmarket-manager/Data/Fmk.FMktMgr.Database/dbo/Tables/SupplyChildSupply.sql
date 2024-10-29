@@ -7,7 +7,7 @@
     [LastUpdateBy]        NVARCHAR (50)      CONSTRAINT [DF_dboSupplyChildSupply_LastUpdateBy] DEFAULT ('{system}') NOT NULL,
     [DateDeactivated]     DATETIMEOFFSET (7) NULL,
     CONSTRAINT [PK_dboSupplyChildSupply] PRIMARY KEY CLUSTERED ([SupplyId] ASC, [ChildSupplyId] ASC),
-    CONSTRAINT [FK_PAR_dboSupplyChildSupply_ChildSupplyId_dboSupply_Id] FOREIGN KEY ([ChildSupplyId]) REFERENCES [dbo].[Supply] ([Id]),
-    CONSTRAINT [FK_PAR_dboSupplyChildSupply_SupplyId_dboSupply_Id] FOREIGN KEY ([SupplyId]) REFERENCES [dbo].[Supply] ([Id])
+    CONSTRAINT [FK_PAR_dboSupplyChildSupply_SupplyId_dboSupply_Id] FOREIGN KEY ([SupplyId]) REFERENCES [dbo].[Supply] ([Id]),
+    CONSTRAINT [FK_PAR_dboSupplyChildSupply_ChildSupplyId_dboSupply_Id] FOREIGN KEY ([ChildSupplyId]) REFERENCES [dbo].[Supply] ([Id])
 );
 

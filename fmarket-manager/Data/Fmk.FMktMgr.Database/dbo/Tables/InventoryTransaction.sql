@@ -5,6 +5,8 @@
     [SupplyCompanyId]            INT                NULL,
     [Quantity]                   INT                NOT NULL,
     [Cost]                       DECIMAL (18, 3)    NULL,
+    [OldLocationId]              INT                NULL,
+    [NewLocationId]              INT                NULL,
     [Description]                NVARCHAR (500)     NULL,
     [FlexData]                   NVARCHAR (MAX)     NULL,
     [DateCreated]                DATETIMEOFFSET (7) CONSTRAINT [DF_dboInventoryTransaction_DateCreated] DEFAULT (sysdatetimeoffset()) NOT NULL,

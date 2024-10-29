@@ -9,3 +9,15 @@ C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj
 C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\refint\FMK.Framework.Common.dll
 C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\FMK.Framework.Common.pdb
 C:\Workspaces\Git\testing\fmarket-manager\Src\Framework\FMK.Framework.Common\obj\Debug\net8.0\ref\FMK.Framework.Common.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\bin\Debug\net8.0\Fmk.Framework.Common.deps.json
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\bin\Debug\net8.0\Fmk.Framework.Common.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\bin\Debug\net8.0\Fmk.Framework.Common.pdb
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\Fmk.Framework.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\Fmk.Framework.Common.AssemblyInfoInputs.cache
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\Fmk.Framework.Common.AssemblyInfo.cs
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\Fmk.Framework.Common.csproj.CoreCompileInputs.cache
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\Fmk.Framework.Common.sourcelink.json
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\Fmk.Framework.Common.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\refint\Fmk.Framework.Common.dll
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\Fmk.Framework.Common.pdb
+C:\Workspaces\Git\inventory\fmarket-manager\Src\Framework\Fmk.Framework.Common\obj\Debug\net8.0\ref\Fmk.Framework.Common.dll

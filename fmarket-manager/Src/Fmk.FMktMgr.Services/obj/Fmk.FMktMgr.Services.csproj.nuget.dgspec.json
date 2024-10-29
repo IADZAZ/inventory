@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\Fmk.FMktMgr.Services.csproj": {}
+    "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\Fmk.FMktMgr.Services.csproj": {}
   },
   "projects": {
-    "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\Fmk.FMktMgr.Services.csproj": {
+    "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\Fmk.FMktMgr.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\Fmk.FMktMgr.Services.csproj",
+        "projectUniqueName": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\Fmk.FMktMgr.Services.csproj",
         "projectName": "Fmk.FMktMgr.Services",
-        "projectPath": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\Fmk.FMktMgr.Services.csproj",
+        "projectPath": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\Fmk.FMktMgr.Services.csproj",
         "packagesPath": "C:\\Users\\markuss\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspaces\\Git\\testing\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\obj\\",
+        "outputPath": "C:\\Workspaces\\Git\\inventory\\fmarket-manager\\Src\\Fmk.FMktMgr.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

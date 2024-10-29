@@ -14,7 +14,7 @@ namespace Fmk.FMktMgr.Core.Enums
             Shipping = 2,
             Billing = 3,
             Home = 4,
-            Work = 5,
+            Work = 5
         }
 
         public enum CommentType
@@ -25,32 +25,32 @@ namespace Fmk.FMktMgr.Core.Enums
 
         public enum CompanyType
         {
-            Supply = 1,
+            Supply = 1
         }
 
         public enum ContactItemType
         {
             Phone = 1,
             Email = 2,
-            URL = 3,
+            URL = 3
         }
 
         public enum EventRentType
         {
 	        EighteenPercent = 1,
-            TieredType1 = 2,
+            TieredType1 = 2
         }
 
         public enum EventType
         {
-            FarmersMarket = 1,
+            FarmersMarket = 1
 }
 
         public enum Gender
         {
             Male = 1,
             Female = 2,
-            Unknown = 3,
+            Unknown = 3
         }
 
         public enum InventoryTransactionType
@@ -59,17 +59,18 @@ namespace Fmk.FMktMgr.Core.Enums
             Adjustment = 2,
             Assemble = 3,
             Sold = 4,
+            Move = 5
         }
 
         public enum LocationType
         {
             Event = 1,
-            InventoryStorage = 2,
+            InventoryStorage = 2
         }
 
         public enum PersonType
         {
-            Vendor = 1,
+            Vendor = 1
         }
 
     }

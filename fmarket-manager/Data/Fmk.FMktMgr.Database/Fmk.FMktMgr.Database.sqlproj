@@ -133,6 +133,10 @@
     <Build Include="dbo\Tables\Variation.sql" />
     <Build Include="dbo\Tables\VariationType.sql" />
     <Build Include="dbo\Tables\Join\jnSupplyVariation.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CreateEvent.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AdjustInventory.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MoveInventory.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PurchaseInventory.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

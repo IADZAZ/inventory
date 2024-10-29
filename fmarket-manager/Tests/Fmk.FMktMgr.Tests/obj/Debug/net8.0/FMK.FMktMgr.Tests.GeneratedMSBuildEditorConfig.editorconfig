@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Fmk.FMktMgr.Tests
-build_property.ProjectDir = C:\Workspaces\Git\testing\fmarket-manager\Tests\Fmk.FMktMgr.Tests\
+build_property.ProjectDir = C:\Workspaces\Git\inventory\fmarket-manager\Tests\Fmk.FMktMgr.Tests\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

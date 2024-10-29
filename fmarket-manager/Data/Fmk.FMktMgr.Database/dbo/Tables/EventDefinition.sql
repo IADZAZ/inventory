@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[EventDefinition] (
     [Id]                  INT                IDENTITY (1, 1) NOT NULL,
-    [Code]                NVARCHAR (10)      NOT NULL,
+    [Code]                NVARCHAR (25)      NOT NULL,
     [Name]                NVARCHAR (50)      NOT NULL,
     [Description]         NVARCHAR (255)     NULL,
     [EventTypeId]         SMALLINT           NOT NULL,

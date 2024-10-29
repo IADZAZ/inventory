@@ -12,7 +12,7 @@
 		</CustomData>
 		<CustomData Category="Reference" Type="Assembly">
 			<Metadata Name="LogicalName" Value="fmk.FMktMgr.Database.dll" />
-			<Metadata Name="FileName" Value="C:\WORKSPACES\GIT\TESTING\FMARKET-MANAGER\DATA\FMK.FMKTMGR.DATABASE\OBJ\DEBUG\FMK.FMKTMGR.DATABASE.DLL" />
+			<Metadata Name="FileName" Value="C:\WORKSPACES\GIT\INVENTORY\FMARKET-MANAGER\DATA\FMK.FMKTMGR.DATABASE\OBJ\DEBUG\FMK.FMKTMGR.DATABASE.DLL" />
 			<Metadata Name="AssemblyName" Value="fmk.FMktMgr.Database" />
 			<Metadata Name="PermissionSet" Value="SAFE" />
 			<Metadata Name="Owner" Value="" />
@@ -20,7 +20,7 @@
 			<Metadata Name="IsVisible" Value="True" />
 			<Metadata Name="IsModelAware" Value="True" />
 			<Metadata Name="SkipCreationIfEmpty" Value="True" />
-			<Metadata Name="AssemblySymbolsName" Value="C:\Workspaces\Git\testing\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\fmk.FMktMgr.Database.pdb" />
+			<Metadata Name="AssemblySymbolsName" Value="C:\Workspaces\Git\inventory\fmarket-manager\Data\Fmk.FMktMgr.Database\obj\Debug\fmk.FMktMgr.Database.pdb" />
 		</CustomData>
 		<CustomData Category="SqlCmdVariables" Type="SqlCmdVariable" />
 	</Header>
@@ -5335,7 +5335,7 @@ END]]></Value>
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="10" />
+									<Property Name="Length" Value="25" />
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
@@ -7092,7 +7092,7 @@ END]]></Value>
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="10" />
+									<Property Name="Length" Value="25" />
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
@@ -9110,6 +9110,36 @@ END]]></Value>
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[decimal]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[InventoryTransaction].[OldLocationId]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[InventoryTransaction].[NewLocationId]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -11630,7 +11660,6 @@ END]]></Value>
 				</Entry>
 				<Entry>
 					<Element Type="SqlSimpleColumn" Name="[dbo].[Person].[DateOfBirth]">
-						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -12968,8 +12997,8 @@ END]]></Value>
 				</Entry>
 			</Relationship>
 			<AttachedAnnotation Disambiguator="185" />
-			<AttachedAnnotation Disambiguator="123" />
 			<AttachedAnnotation Disambiguator="124" />
+			<AttachedAnnotation Disambiguator="123" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[SupplyType]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -13663,6 +13692,1337 @@ END]]></Value>
 				</Entry>
 			</Relationship>
 			<AttachedAnnotation Disambiguator="190" />
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[usp_AdjustInventory]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+BEGIN
+SET NOCOUNT ON;
+BEGIN TRANSACTION;
+BEGIN TRY
+	DECLARE @ErrMsg nvarchar(255);
+
+	DECLARE @SPName nvarchar(1000) = '['+OBJECT_SCHEMA_NAME(@@PROCID)+'].['+OBJECT_NAME(@@PROCID)+']';
+	PRINT CONCAT('This Name: ''', @SPName, '''');
+	
+	PRINT CONCAT('@SupplyId: ''', @SupplyId, '''');
+	PRINT CONCAT('@LocationId: ''', @LocationId, '''');
+	PRINT CONCAT('@AdjustmentQuantity: ''', @AdjustmentQuantity, '''');
+	PRINT CONCAT('@Reason: ''', @Reason, '''');
+	PRINT CONCAT('@UpdateBy: ''', @UpdateBy, '''');
+	PRINT ' --'
+
+	-- Validate Supply.
+	IF(NOT EXISTS((SELECT [Id] FROM [dbo].[Supply] WHERE [Id] = @SupplyId AND [DateDeactivated] IS NULL))) BEGIN
+		SET @ErrMsg = 'Passed in @SupplyId does not point to an active Supply.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Validate Location.
+	IF(NOT EXISTS((SELECT [Id] FROM [dbo].[Location] WHERE [Id] = @LocationId AND [DateDeactivated] IS NULL))) BEGIN
+		SET @ErrMsg = 'Passed in @LocationId does not point to an active Location.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+
+	-- Validate AdjustmentQuantity.
+	IF(@AdjustmentQuantity IS NULL OR @AdjustmentQuantity = 0) BEGIN
+		SET @ErrMsg = 'Passed int @AdjustmentQuantity must be a positive or negative number.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+
+	-- Value for LastUpdateBy.
+	IF(@UpdateBy IS NULL) SET @UpdateBy = CONCAT('{', @SPName, '}');
+
+	-- Update quantity on Inventory record for passed in Supply.
+	DECLARE @InventoryId int = (SELECT TOP 1 [Id] FROM [dbo].[Inventory] WHERE [SupplyId] = @SupplyId);
+	PRINT CONCAT('@InventoryId: ''', @InventoryId, '''');
+	IF (@InventoryId IS NULL) BEGIN
+		SET @ErrMsg = 'No Inventory record found for passed in @SupplyId.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	UPDATE	[dbo].[Inventory]
+	SET		[Quantity] = [Quantity] + @AdjustmentQuantity, 
+			[LastUpdateBy] = @UpdateBy
+	WHERE	[Id] = @InventoryId;
+	
+	-- Update quantity on InventoryLocation record for passed in Supply.
+	DECLARE @InventoryLocationId int = (	SELECT TOP 1 [Id] 
+											FROM	[dbo].[InventoryLocation] 
+											WHERE	[SupplyId] = @SupplyId AND [LocationId] = @LocationId);
+	PRINT CONCAT('@InventoryLocationId: ''', @InventoryLocationId, '''');
+	IF (@InventoryLocationId IS NULL) BEGIN
+		SET @ErrMsg = 'No InventoryLocation record found for passed in @SupplyId and @LocationId.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END ELSE BEGIN
+		UPDATE	[dbo].[InventoryLocation]
+		SET		[Quantity] = [Quantity] + @AdjustmentQuantity,
+				[LastUpdateBy] = @UpdateBy
+		WHERE	[Id] = @InventoryLocationId;
+	END
+
+	-- Add an InventoryTransaction to record this transaction.
+	DECLARE @InvTranTypeId smallint = (SELECT [Id] FROM [dbo].[lkInventoryTransactionType] WHERE [Code] = 'ADJ');
+	INSERT INTO [dbo].[InventoryTransaction] ([InventoryTransactionTypeId], [SupplyId], [Quantity], [Description], [LastUpdateBy])
+		VALUES	(@InvTranTypeId, @SupplyId, @AdjustmentQuantity, @Reason, @UpdateBy);
+
+
+EXIT_HANDLER:
+END TRY
+BEGIN CATCH
+	IF (XACT_STATE()=-1 OR XACT_STATE()=1) ROLLBACK TRANSACTION;
+	DECLARE @ErrStr nvarchar(4000);
+	EXEC [adm].[usp_HandleError] @@PROCID, @ErrStr OUTPUT;
+	THROW;
+END CATCH
+IF ((XACT_STATE())=1) COMMIT TRANSACTION;
+END]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_AdjustInventory].[@SupplyId]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[LocationId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_AdjustInventory].[@LocationId]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[smallint]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType].[Code]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_AdjustInventory].[@AdjustmentQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_AdjustInventory].[@Reason]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_AdjustInventory].[@UpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply].[DateDeactivated]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location].[DateDeactivated]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[InventoryTransactionTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[Description]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[adm].[usp_HandleError]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_AdjustInventory].[@SupplyId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="25" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_AdjustInventory].[@LocationId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="25" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_AdjustInventory].[@AdjustmentQuantity]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_AdjustInventory].[@Reason]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="500" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_AdjustInventory].[@UpdateBy]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="255" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="CreateOffset" Value="285" />
+				<Property Name="Length" Value="3682" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="-- =============================================&#xD;&#xA;-- Author:&#x9;&#x9;Markus Schippel&#xD;&#xA;-- Create date: 2024-10-29&#xD;&#xA;-- Description:&#x9;Record adjustment to inventory.&#xD;&#xA;-- =============================================&#xD;&#xA;-- EXEC [dbo].[usp_AdjustInventory] 1, 1, -15, 'dropped box of honey', 'Jan';&#xD;&#xA;CREATE PROCEDURE [dbo].[usp_AdjustInventory]&#xD;&#xA;&#xD;&#xA;&#x9;@SupplyId nvarchar(25),&#xD;&#xA;&#x9;@LocationId nvarchar(25),&#xD;&#xA;&#x9;@AdjustmentQuantity int,&#xD;&#xA;&#x9;@Reason nvarchar(500) = NULL,&#xD;&#xA;&#x9;@UpdateBy nvarchar(255) = NULL&#xD;&#xA;&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[usp_CreateEvent]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+BEGIN
+SET NOCOUNT ON;
+BEGIN TRANSACTION;
+BEGIN TRY
+	DECLARE @ErrMsg nvarchar(255);
+
+	DECLARE @SPName nvarchar(1000) = '['+OBJECT_SCHEMA_NAME(@@PROCID)+'].['+OBJECT_NAME(@@PROCID)+']';
+	PRINT CONCAT('This Name: ''', @SPName, '''');
+
+	PRINT CONCAT('@EventDate: ''', @EventDate, '''');
+	PRINT CONCAT('@EventDefinitionIdOrCode: ''', @EventDefinitionIdOrCode, '''');
+	PRINT CONCAT('@VendorPersonId: ''', @VendorPersonId, '''');
+	PRINT CONCAT('@UpdateBy: ''', @UpdateBy, '''');
+	PRINT CONCAT('@BothSpace: ''', @BothSpace, '''');
+	PRINT CONCAT('@PettyCash: ''', @PettyCash, '''');
+
+	-- Validate @EventDate.
+	IF(@EventDate IS NULL) SET @EventDate = DATEADD(day, 1, GETDATE());
+
+	-- Set/validate EventDefinition.
+	DECLARE @EventDefinitionId int = (SELECT [Id] FROM [dbo].[EventDefinition] WHERE [Id] = @EventDefinitionIdOrCode OR [Code] = @EventDefinitionIdOrCode);
+	IF(@EventDefinitionId IS NULL) BEGIN
+		SET @ErrMsg = 'Passed int @EventDefinitionIdOrCode does not point to an existing EventDefinition.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Set/validate Vendor (Person).
+	DECLARE @PersonId int = (SELECT [Id] FROM [dbo].[Person] WHERE [Id] = @VendorPersonId);
+	IF(@VendorPersonId IS NULL) BEGIN
+		SET @ErrMsg = 'Passed int @VendorPersonId does not point to an existing Person.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	IF(@UpdateBy IS NULL) SET @UpdateBy = CONCAT('{', @SPName, '}');
+
+	-- Create Event.
+	INSERT INTO [dbo].[Event] ([EventDefinitionId], [EventDate], [VendorPersonId], [BoothSpace], [PettyCash], [LastUpdateBy])
+		SELECT	[Id], 
+				(CONCAT(@EventDate, ' ', CONVERT (time, [ScheduledStartTime]), ' ', DATENAME(tzoffset, [ScheduledStartTime]))),
+				@PersonId,
+				COALESCE(@BothSpace, [DefaultBoothSpace]),
+				COALESCE(@PettyCash, [DefaultPettyCash]),
+				@UpdateBy
+		FROM	[dbo].[EventDefinition]
+		WHERE	[Id] = @EventDefinitionId;
+	DECLARE @EventId int = SCOPE_IDENTITY();
+	
+	-- Create EventProducts.
+	INSERT INTO [dbo].[EventProduct] ([EventId], [ProductId], [TargetQuantity], [StartQuantity], [DiscountAmount], [LastUpdateBy])
+		SELECT	@EventId, [ProductId], [Quantity], [Quantity], 0.00, @UpdateBy
+		FROM	[dbo].[EventDefinitionProduct]
+		WHERE	[EventDefinitionId] = @EventDefinitionId;
+
+
+EXIT_HANDLER:
+END TRY
+BEGIN CATCH
+	IF (XACT_STATE()=-1 OR XACT_STATE()=1) ROLLBACK TRANSACTION;
+	DECLARE @ErrStr nvarchar(4000);
+	EXEC [adm].[usp_HandleError] @@PROCID, @ErrStr OUTPUT;
+	THROW;
+END CATCH
+IF ((XACT_STATE())=1) COMMIT TRANSACTION;
+END]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinition]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinition].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_CreateEvent].[@EventDefinitionIdOrCode]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinition].[Code]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Person]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Person].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_CreateEvent].[@VendorPersonId]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_CreateEvent].[@EventDate]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_CreateEvent].[@UpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_CreateEvent].[@BothSpace]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_CreateEvent].[@PettyCash]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Event]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Event].[EventDefinitionId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Event].[EventDate]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Event].[VendorPersonId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Event].[BoothSpace]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Event].[PettyCash]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Event].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinition].[Id]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[time]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinition].[ScheduledStartTime]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinition].[DefaultBoothSpace]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinition].[DefaultPettyCash]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventProduct]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventProduct].[EventId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventProduct].[ProductId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventProduct].[TargetQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventProduct].[StartQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventProduct].[DiscountAmount]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventProduct].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinitionProduct]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinitionProduct].[ProductId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinitionProduct].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[EventDefinitionProduct].[EventDefinitionId]" />
+				</Entry>
+				<Entry>
+					<References Name="[adm].[usp_HandleError]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_CreateEvent].[@EventDate]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[date]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_CreateEvent].[@EventDefinitionIdOrCode]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="25" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_CreateEvent].[@VendorPersonId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_CreateEvent].[@UpdateBy]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="255" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_CreateEvent].[@BothSpace]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="255" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_CreateEvent].[@PettyCash]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Scale" Value="2" />
+									<Property Name="Precision" Value="18" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[decimal]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="CreateOffset" Value="279" />
+				<Property Name="Length" Value="3032" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="-- =============================================&#xD;&#xA;-- Author:&#x9;&#x9;Markus Schippel&#xD;&#xA;-- Create date: 2024-10-25&#xD;&#xA;-- Description:&#x9;Create an Event based on an EventTemplate.&#xD;&#xA;-- =============================================&#xD;&#xA;-- EXEC [dbo].[usp_CreateEvent] '2024-10-17', 4, 3, 'DUser';&#xD;&#xA;CREATE PROCEDURE [dbo].[usp_CreateEvent]&#xD;&#xA;&#xD;&#xA;&#x9;@EventDate date,&#xD;&#xA;&#x9;@EventDefinitionIdOrCode nvarchar(25),&#xD;&#xA;&#x9;@VendorPersonId int,&#xD;&#xA;&#x9;@UpdateBy nvarchar(255) = NULL,&#xD;&#xA;&#x9;@BothSpace nvarchar(255) = NULL,&#xD;&#xA;&#x9;@PettyCash decimal(18,2) = NULL&#xD;&#xA;&#x9;&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[usp_MoveInventory]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+BEGIN
+SET NOCOUNT ON;
+BEGIN TRANSACTION;
+BEGIN TRY
+	DECLARE @ErrMsg nvarchar(255);
+
+	DECLARE @SPName nvarchar(1000) = '['+OBJECT_SCHEMA_NAME(@@PROCID)+'].['+OBJECT_NAME(@@PROCID)+']';
+	PRINT CONCAT('This Name: ''', @SPName, '''');
+	
+	PRINT CONCAT('@SupplyId: ''', @SupplyId, '''');
+	PRINT CONCAT('@OldLocationId: ''', @OldLocationId, '''');
+	PRINT CONCAT('@NewLocationId: ''', @NewLocationId, '''');
+	PRINT CONCAT('@Quantity: ''', @Quantity, '''');
+	PRINT CONCAT('@Reason: ''', @Reason, '''');
+	PRINT CONCAT('@UpdateBy: ''', @UpdateBy, '''');
+	PRINT ' --'
+
+	-- Validate Supply.
+	IF(NOT EXISTS((SELECT [Id] FROM [dbo].[Supply] WHERE [Id] = @SupplyId AND [DateDeactivated] IS NULL))) BEGIN
+		SET @ErrMsg = 'Passed in @SupplyId does not point to an active Supply.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Validate "Old" Location.
+	IF(NOT EXISTS((SELECT [Id] FROM [dbo].[Location] WHERE [Id] = @OldLocationId AND [DateDeactivated] IS NULL))) BEGIN
+		SET @ErrMsg = 'Passed in @OldLocationId does not point to an active Location.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Validate "New" Location.
+	IF(NOT EXISTS((SELECT [Id] FROM [dbo].[Location] WHERE [Id] = @NewLocationId AND [DateDeactivated] IS NULL))) BEGIN
+		SET @ErrMsg = 'Passed in @NewLocationId does not point to an active Location.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Validate Quantity.
+	IF(@Quantity IS NULL OR @Quantity < 1) BEGIN
+		SET @ErrMsg = 'Passed int @Quantity is missing or less than 1.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Value for LastUpdateBy.
+	IF(@UpdateBy IS NULL) SET @UpdateBy = CONCAT('{', @SPName, '}');
+
+
+	-- Update quantity on "Old" InventoryLocation record for passed in Supply.
+	DECLARE @OldInventoryLocationId int = (	SELECT TOP 1 [Id] 
+											FROM	[dbo].[InventoryLocation] 
+											WHERE	[SupplyId] = @SupplyId AND [LocationId] = @OldLocationId);
+	PRINT CONCAT('@OldInventoryLocationId: ''', @OldInventoryLocationId, '''');
+	IF (@OldInventoryLocationId IS NULL) BEGIN
+		SET @ErrMsg = 'No InventoryLocation record found for passed in @SupplyId and @OldInventoryLocationId.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END ELSE BEGIN
+		UPDATE	[dbo].[InventoryLocation]
+		SET		[Quantity] = [Quantity] - @Quantity,
+				[LastUpdateBy] = @UpdateBy
+		WHERE	[Id] = @OldInventoryLocationId;
+	END
+
+	
+	-- Update quantity on "New" InventoryLocation record for passed in Supply.
+	DECLARE @NewInventoryLocationId int = (	SELECT TOP 1 [Id] 
+											FROM	[dbo].[InventoryLocation] 
+											WHERE	[SupplyId] = @SupplyId AND [LocationId] = @NewLocationId);
+	PRINT CONCAT('@NewInventoryLocationId: ''', @NewInventoryLocationId, '''');
+	IF (@NewInventoryLocationId IS NULL) BEGIN
+		INSERT INTO [dbo].[InventoryLocation] ([SupplyId], [Quantity], [LocationId], [LastUpdateBy])
+			VALUES	(@SupplyId, @Quantity, @NewLocationId, @UpdateBy);
+	END ELSE BEGIN
+		UPDATE	[dbo].[InventoryLocation]
+		SET		[Quantity] = [Quantity] + @Quantity,
+				[LastUpdateBy] = @UpdateBy
+		WHERE	[Id] = @NewInventoryLocationId;
+	END
+
+	-- Add an InventoryTransaction to record this transaction.
+	DECLARE @InvTranTypeId smallint = (SELECT [Id] FROM [dbo].[lkInventoryTransactionType] WHERE [Code] = 'MOVE');
+	INSERT INTO [dbo].[InventoryTransaction] ([InventoryTransactionTypeId], [SupplyId], [Quantity], [OldLocationId], [NewLocationId], [Description], [LastUpdateBy])
+		VALUES	(@InvTranTypeId, @SupplyId, @Quantity, @OldLocationId, @NewLocationId, @Reason, @UpdateBy);
+
+
+EXIT_HANDLER:
+END TRY
+BEGIN CATCH
+	IF (XACT_STATE()=-1 OR XACT_STATE()=1) ROLLBACK TRANSACTION;
+	DECLARE @ErrStr nvarchar(4000);
+	EXEC [adm].[usp_HandleError] @@PROCID, @ErrStr OUTPUT;
+	THROW;
+END CATCH
+IF ((XACT_STATE())=1) COMMIT TRANSACTION;
+END]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_MoveInventory].[@SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[LocationId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_MoveInventory].[@OldLocationId]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_MoveInventory].[@NewLocationId]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[smallint]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType].[Code]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_MoveInventory].[@Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_MoveInventory].[@Reason]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_MoveInventory].[@UpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply].[DateDeactivated]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location].[DateDeactivated]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[LocationId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[InventoryTransactionTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[OldLocationId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[NewLocationId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[Description]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[adm].[usp_HandleError]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_MoveInventory].[@SupplyId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="25" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_MoveInventory].[@OldLocationId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="25" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_MoveInventory].[@NewLocationId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="25" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_MoveInventory].[@Quantity]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_MoveInventory].[@Reason]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="500" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_MoveInventory].[@UpdateBy]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="255" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="CreateOffset" Value="269" />
+				<Property Name="Length" Value="4266" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="-- =============================================&#xD;&#xA;-- Author:&#x9;&#x9;Markus Schippel&#xD;&#xA;-- Create date: 2024-10-29&#xD;&#xA;-- Description:&#x9;Record adjustment to inventory.&#xD;&#xA;-- =============================================&#xD;&#xA;-- EXEC [dbo].[usp_MoveInventory] 1, 2, 1, 11, NULL, 'James';&#xD;&#xA;CREATE PROCEDURE [dbo].[usp_MoveInventory]&#xD;&#xA;&#xD;&#xA;&#x9;@SupplyId nvarchar(25),&#xD;&#xA;&#x9;@OldLocationId nvarchar(25),&#xD;&#xA;&#x9;@NewLocationId nvarchar(25),&#xD;&#xA;&#x9;@Quantity int,&#xD;&#xA;&#x9;@Reason nvarchar(500) = NULL,&#xD;&#xA;&#x9;@UpdateBy nvarchar(255) = NULL&#xD;&#xA;&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[usp_PurchaseInventory]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+BEGIN
+SET NOCOUNT ON;
+BEGIN TRANSACTION;
+BEGIN TRY
+	DECLARE @ErrMsg nvarchar(255);
+
+	DECLARE @SPName nvarchar(1000) = '['+OBJECT_SCHEMA_NAME(@@PROCID)+'].['+OBJECT_NAME(@@PROCID)+']';
+	PRINT CONCAT('This Name: ''', @SPName, '''');
+	
+	PRINT CONCAT('@SupplyId: ''', @SupplyId, '''');
+	PRINT CONCAT('@LocationId: ''', @LocationId, '''');
+	PRINT CONCAT('@Quantity: ''', @Quantity, '''');
+	PRINT CONCAT('@TotalCost: ''', @TotalCost, '''');
+	PRINT CONCAT('@SupplyCompanyId: ''', @SupplyCompanyId, '''');
+	PRINT CONCAT('@UpdateBy: ''', @UpdateBy, '''');
+	PRINT ' --'
+	
+	DECLARE @CostPer decimal(18,2) = @TotalCost / CAST(@Quantity as decimal(18,2));
+
+	PRINT CONCAT('@CostPer: ''', @CostPer, '''');
+
+	-- Validate Supply.
+	IF(NOT EXISTS((SELECT [Id] FROM [dbo].[Supply] WHERE [Id] = @SupplyId AND [DateDeactivated] IS NULL))) BEGIN
+		SET @ErrMsg = 'Passed in @SupplyId does not point to an active Supply.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Validate Location.
+	IF(NOT EXISTS((SELECT [Id] FROM [dbo].[Location] WHERE [Id] = @LocationId AND [DateDeactivated] IS NULL))) BEGIN
+		SET @ErrMsg = 'Passed in @LocationId does not point to an active Location.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Validate SupplyCompany.
+	IF((@SupplyCompanyId IS NOT NULL) AND (NOT EXISTS((SELECT [Id] FROM [dbo].[Company] WHERE [Id] = @SupplyCompanyId AND [DateDeactivated] IS NULL)))) BEGIN
+		SET @ErrMsg = 'Passed in @SupplyCompanyId does not point to an active Company.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Validate Quantity.
+	IF(@Quantity IS NULL OR @Quantity < 1) BEGIN
+		SET @ErrMsg = 'Passed int @Quantity is missing or less than 1.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Validate TotalCost.
+	IF(@TotalCost IS NULL OR @TotalCost < 0.01) BEGIN
+		SET @ErrMsg = 'Passed int @TotalCost is missing or less than 0.01.';
+		RAISERROR (@ErrMsg, 16 , -1);
+	END
+	
+	-- Value for LastUpdateBy.
+	IF(@UpdateBy IS NULL) SET @UpdateBy = CONCAT('{', @SPName, '}');
+
+	-- Create or update Inventory record for passed in Supply.
+	DECLARE @InventoryId int = (SELECT TOP 1 [Id] FROM [dbo].[Inventory] WHERE [SupplyId] = @SupplyId)
+	PRINT CONCAT('@InventoryId: ''', @InventoryId, '''');
+	IF (@InventoryId IS NULL) BEGIN
+		INSERT INTO [dbo].[Inventory] ([SupplyId], [Quantity], [LastCost], [OverrideCost], [LastUpdateBy])
+			VALUES	(@SupplyId, @Quantity, @CostPer, @CostPer, @UpdateBy);
+	END ELSE BEGIN
+		UPDATE	[dbo].[Inventory]
+		SET		[Quantity] = [Quantity] + @Quantity,
+				[LastCost] = @CostPer,
+				--[OverrideCost] = (CASE WHEN [OverrideCost] IS NULL THEN @CostPer ELSE [OverrideCost] END)
+				[LastUpdateBy] = @UpdateBy
+		WHERE	[Id] = @InventoryId;
+	END
+
+	-- Create or update InventoryLocation record for passed in Supply.
+	DECLARE @InventoryLocationId int = (	SELECT TOP 1 [Id] 
+											FROM	[dbo].[InventoryLocation] 
+											WHERE	[SupplyId] = @SupplyId AND [LocationId] = @LocationId);
+	PRINT CONCAT('@InventoryLocationId: ''', @InventoryLocationId, '''');
+	IF (@InventoryLocationId IS NULL) BEGIN
+		INSERT INTO [dbo].[InventoryLocation] ([SupplyId], [Quantity], [LocationId], [LastUpdateBy])
+			VALUES	(@SupplyId, @Quantity, @LocationId, @UpdateBy);
+	END ELSE BEGIN
+		UPDATE	[dbo].[InventoryLocation]
+		SET		[Quantity] = [Quantity] + @Quantity,
+				[LastUpdateBy] = @UpdateBy
+		WHERE	[Id] = @InventoryLocationId;
+	END
+	
+	-- Add an InventoryTransaction to record this transaction.
+	DECLARE @InvTranTypeId smallint = (SELECT [Id] FROM [dbo].[lkInventoryTransactionType] WHERE [Code] = 'PRCHS');
+	INSERT INTO [dbo].[InventoryTransaction] ([InventoryTransactionTypeId], [SupplyId], [SupplyCompanyId], [Quantity], [Cost], [LastUpdateBy])
+		VALUES	(@InvTranTypeId, @SupplyId, @SupplyCompanyId, @Quantity, @CostPer, @UpdateBy);
+
+
+EXIT_HANDLER:
+END TRY
+BEGIN CATCH
+	IF (XACT_STATE()=-1 OR XACT_STATE()=1) ROLLBACK TRANSACTION;
+	DECLARE @ErrStr nvarchar(4000);
+	EXEC [adm].[usp_HandleError] @@PROCID, @ErrStr OUTPUT;
+	THROW;
+END CATCH
+IF ((XACT_STATE())=1) COMMIT TRANSACTION;
+END]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[decimal]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_PurchaseInventory].[@TotalCost]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[decimal]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_PurchaseInventory].[@Quantity]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_PurchaseInventory].[@SupplyId]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[LocationId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_PurchaseInventory].[@LocationId]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[smallint]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[lkInventoryTransactionType].[Code]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_PurchaseInventory].[@SupplyCompanyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[usp_PurchaseInventory].[@UpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Supply].[DateDeactivated]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Location].[DateDeactivated]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Company]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Company].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Company].[DateDeactivated]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[LastCost]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[OverrideCost]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Inventory].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[LocationId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryLocation].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[InventoryTransactionTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[SupplyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[SupplyCompanyId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[Quantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[Cost]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InventoryTransaction].[LastUpdateBy]" />
+				</Entry>
+				<Entry>
+					<References Name="[adm].[usp_HandleError]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_PurchaseInventory].[@SupplyId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="25" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_PurchaseInventory].[@LocationId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="25" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_PurchaseInventory].[@Quantity]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_PurchaseInventory].[@TotalCost]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Scale" Value="2" />
+									<Property Name="Precision" Value="18" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[decimal]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_PurchaseInventory].[@SupplyCompanyId]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[usp_PurchaseInventory].[@UpdateBy]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="255" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="CreateOffset" Value="284" />
+				<Property Name="Length" Value="4571" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="-- =============================================&#xD;&#xA;-- Author:&#x9;&#x9;Markus Schippel&#xD;&#xA;-- Create date: 2024-10-28&#xD;&#xA;-- Description:&#x9;Record addition to inventory (purchase).&#xD;&#xA;-- =============================================&#xD;&#xA;-- EXEC [dbo].[usp_PurchaseInventory] 1, 1, 200, 623.15, 1, 'Hank';&#xD;&#xA;CREATE PROCEDURE [dbo].[usp_PurchaseInventory]&#xD;&#xA;&#xD;&#xA;&#x9;@SupplyId nvarchar(25),&#xD;&#xA;&#x9;@LocationId nvarchar(25),&#xD;&#xA;&#x9;@Quantity int,&#xD;&#xA;&#x9;@TotalCost decimal(18,2),&#xD;&#xA;&#x9;@SupplyCompanyId int = NULL,&#xD;&#xA;&#x9;@UpdateBy nvarchar(255) = NULL&#xD;&#xA;&#xD;&#xA;AS" />
+			</Annotation>
 		</Element>
 		<Element Type="SqlProcedure" Name="[dbo].[usp_Template]">
 			<Property Name="BodyScript">
